@@ -12,6 +12,8 @@
 
 ![BroadCodeHome](https://gitee.com/broad-code/broad-code/raw/master/public/pic.png)
 
+快速访问：http://139.159.194.35:8100
+
 > 使用小技巧:
 >
 > > 1、按 Ctrl 自动对焦搜索框，Enter 自动搜索
