@@ -1,8 +1,8 @@
 <br />
 
 <div align="center">
-    <a href="https://varbook.uiuing.com" target="_blank">
-        <img src="http://139.159.194.35:8100/favicon.ico" width="100" height="100">
+    <a href="http://139.159.194.35:8100/" target="_blank">
+        <img src="https://gitee.com/broad-code/broad-code/raw/master/public/favicon.ico" width="100" height="100">
     </a>
 </div>
 
@@ -10,7 +10,7 @@
 
 **适合中文程序员的变量命名助手，NLP+翻译，规范变量命名，定制化变量命名规则**
 
-![BroadCodeHome](http://139.159.194.35:8100/pic.png)
+![BroadCodeHome](https://gitee.com/broad-code/broad-code/raw/master/public/pic.png)
 
 > 使用小技巧:
 >
