@@ -15,7 +15,6 @@ export const APPLICATION_JSON = 'application/json; charset=utf-8'
 export const TEXT_PLAIN = 'text/plain; charset=utf-8'
 
 const service = Axios.create({
-  baseURL,
   timeout: 10 * 60 * 1000,
 })
 
