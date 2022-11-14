@@ -71,7 +71,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, defineProps } from 'vue'
+  import { ref, defineProps, watch } from 'vue'
   import { getTranslate } from '@/api/modules/youdao'
   import { FlashOutline } from '@vicons/ionicons5'
   import { useUserConfigStore } from '@/store/modules/user-config'
@@ -81,15 +81,9 @@
   import { useMessage } from 'naive-ui'
   import { useRouter } from 'vue-router'
 
-  const props = defineProps({
-    getSearch: {
-      type: Function,
-      default: (res: string) => {
-        console.log(res)
-        return ''
-      },
-    },
-  })
+  const props = defineProps<{
+    getSearch: any
+  }>()
 
   const message = useMessage()
   const router = useRouter()
@@ -106,6 +100,14 @@
     sign: '',
     signType: 'v3',
   }
+
+  watch(
+    () => props.getSearch,
+    (val) => {
+      query.value = val
+      handelSearch()
+    }
+  )
 
   function handelSearch() {
     params.q = query.value

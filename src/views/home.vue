@@ -34,26 +34,42 @@
       <n-layout-content content-style="padding: 24px;">
         <n-grid :x-gap="12" :y-gap="12" :cols="4" layout-shift-disabled>
           <n-gi>
-            <n-card class="length-green" style="width: 70%" closable hoverable>
+            <n-card class="length-green" style="width: 70%" hoverable>
+              <template #header-extra>
+                <n-popconfirm @positive-click="deletingHistoricalRecords">
+                  <template #trigger>
+                    <n-button quaternary circle>
+                      <template #icon>
+                        <n-icon>
+                          <TrashBinOutline />
+                        </n-icon>
+                      </template>
+                    </n-button>
+                  </template>
+                  是否清空历史记录？
+                </n-popconfirm>
+              </template>
               <template #header>
                 <n-space justify="space-between">
                   <span>📖 历史记录</span>
                 </n-space>
               </template>
               <template #default>
-                <div
-                  v-for="(item, index) in userConfigStore.historyRecord"
-                  :key="index"
-                  class="history-record"
-                  @click="handelHistoryRecord(item)"
-                >
-                  <n-button type="info" dashed round> {{ item }}</n-button>
-                </div>
+                <n-scrollbar style="max-height: 30vh">
+                  <div
+                    v-for="(item, index) in userConfigStore.historyRecord.reverse()"
+                    :key="index"
+                    class="history-record"
+                    @click="handelHistoryRecordClickOn(item)"
+                  >
+                    <n-button type="info" dashed round> {{ item }}</n-button>
+                  </div>
+                </n-scrollbar>
               </template>
             </n-card>
           </n-gi>
           <n-gi :span="2">
-            <Content :get-search="handelHistoryRecord" />
+            <Content :getSearch="rule" />
           </n-gi>
           <n-gi>
             <div class="light-green"></div>
@@ -96,18 +112,21 @@
 </template>
 
 <script lang="ts" setup>
-  import { SettingsOutline, BugSharp } from '@vicons/ionicons5'
+  import { SettingsOutline, BugSharp, TrashBinOutline } from '@vicons/ionicons5'
   import { useAppConfigStore } from '@/store/modules/app-config'
   import { useUserConfigStore } from '@/store/modules/user-config'
   import { ThemeMode } from '@/store/types'
   import Content from '@/components/layout/content.vue'
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
+  import { useMessage } from 'naive-ui'
 
   const appConfigStore = useAppConfigStore()
   const userConfigStore = useUserConfigStore()
+  const message = useMessage()
   const active = ref<boolean>(false)
   const userFrom = ref<any>({})
+  const rule = ref<string>('')
   const router = useRouter()
 
   function changSubject() {
@@ -119,14 +138,18 @@
     active.value = true
   }
 
+  function handelHistoryRecordClickOn(r: any) {
+    rule.value = r
+  }
+
   function handleSetRule() {
     userConfigStore.addExcludeRule(userFrom.value.rule)
     userFrom.value.rule = ''
   }
 
-  function handelHistoryRecord(item: string) {
-    router.push({ path: '/', query: { q: item } })
-    return item
+  function deletingHistoricalRecords() {
+    userConfigStore.clearHistoryRecord()
+    message.success('清空成功')
   }
 </script>
 

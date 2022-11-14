@@ -21,10 +21,15 @@ export const useUserConfigStore = defineStore(
       }
     }
 
+    function clearHistoryRecord() {
+      state.historyRecord = []
+    }
+
     return {
       ...toRefs(state),
       addHistoryRecord,
       addExcludeRule,
+      clearHistoryRecord,
     }
   },
   {
