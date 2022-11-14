@@ -56,7 +56,7 @@
         {{ toLowercase(item) }}
       </n-tag>
     </n-card>
-    <n-card title="📖 CSS命名规范" embedded :bordered="false" class="card-man">
+    <n-card title="📖 CSS命名" embedded :bordered="false" class="card-man">
       <n-tag
         type="success"
         v-for="(item, index) in searchData.translation"
@@ -79,14 +79,12 @@
   import { v4 as uuidv4 } from 'uuid'
   import Clipboard from 'clipboard'
   import { useMessage } from 'naive-ui'
-  import { useRouter } from 'vue-router'
 
   const props = defineProps<{
     getSearch: any
   }>()
 
   const message = useMessage()
-  const router = useRouter()
   const userConfig = useUserConfigStore()
   const query = ref('')
   const searchData = ref<any>({})

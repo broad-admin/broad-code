@@ -7,3 +7,11 @@ export const getTranslate = (data: any) => {
     data,
   })
 }
+
+export const getPoetryOfDay = () => {
+  return request({
+    baseURL: 'https://v2.jinrishici.com',
+    url: '/one.json',
+    method: 'get',
+  })
+}
