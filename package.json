@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "staging": "vite build  --mode staging",
+    "build": "vite build",
+    "tsc": "vue-tsc --noEmit",
+    "serve": "vite preview"
   },
   "dependencies": {
     "@vicons/ionicons5": "^0.12.0",

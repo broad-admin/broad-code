@@ -2,14 +2,15 @@
   <div>
     <n-input
       v-model:value="query"
-      @keydown.enter="handelSearch"
+      @keyup.enter="handelSearch"
       placeholder="请输入翻译的文本"
       size="large"
+      autofocus
       style="height: 50px; line-height: 50px"
       round
     >
       <template #prefix>
-        <n-icon :component="FlashOutline" size="20" />
+        <n-icon :component="FlashOutline" size="20" @click="handelSearch" />
       </template>
     </n-input>
     <n-card title="📖 大驼峰" embedded :bordered="false" class="card-man">
@@ -78,7 +79,7 @@
   import crypto from 'js-sha256'
   import { v4 as uuidv4 } from 'uuid'
   import Clipboard from 'clipboard'
-  import { useMessage } from 'naive-ui'
+  import { useMessage, useLoadingBar } from 'naive-ui'
 
   const props = defineProps<{
     getSearch: any
@@ -86,6 +87,7 @@
 
   const message = useMessage()
   const userConfig = useUserConfigStore()
+  const loadingBar = useLoadingBar()
   const query = ref('')
   const searchData = ref<any>({})
   const params: any = {
@@ -102,20 +104,34 @@
   watch(
     () => props.getSearch,
     (val) => {
-      query.value = val
-      handelSearch()
+      if (val) {
+        query.value = val
+        handelSearch()
+      }
     }
   )
 
   function handelSearch() {
+    loadingBar.start()
     params.q = query.value
     params.curtime = Math.round(new Date().getTime() / 1000)
     params.salt = uuidv4()
     params.sign = setSign()
     getTranslate(params).then((res: any) => {
-      searchData.value = res
-      searchData.value.translation = filterExcUsRule(res.translation)
-      userConfig.addHistoryRecord(query.value)
+      if (res.errorCode === '0') {
+        searchData.value = res
+        if (res.web && res.web.length > 0) {
+          res.web.forEach((item: any) => {
+            res.translation.push(...item.value)
+          })
+        }
+        searchData.value.translation = filterExcUsRule(res.translation)
+        userConfig.addHistoryRecord(query.value)
+        loadingBar.finish()
+      } else {
+        message.error('翻译失败，请稍后再试！')
+        loadingBar.error()
+      }
     })
   }
 
@@ -205,9 +221,12 @@
   function filterExcUsRule(nameList: []) {
     const arr: any = []
     const excUsRule: [] = userConfig.excludeRule || []
+    excUsRule.push(...userConfig.defaultExcludeRule)
     nameList.forEach((index: string) => {
+      console.log(1)
       const a = index.split(' ')
       const b = a.map((item) => {
+        console.log(2)
         let type = true
         excUsRule.forEach((rule) => {
           if (item === rule) {
@@ -220,6 +239,7 @@
       })
       let c = ''
       b.forEach((item) => {
+        console.log(3)
         if (item) {
           c = c + item + ' '
         }
@@ -239,5 +259,10 @@
 <style scoped>
   .card-man {
     margin-top: 20px;
+  }
+
+  .n-tag {
+    cursor: pointer;
+    margin-right: 10px;
   }
 </style>

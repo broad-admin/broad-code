@@ -1,13 +1,24 @@
 <template>
   <div style="height: 100%">
-    <n-layout style="height: 100%; display: flex">
+    <n-layout style="height: 100%">
       <n-layout-header>
         <n-grid x-gap="12" :cols="3">
           <n-gi>
             <div></div>
           </n-gi>
           <n-gi>
-            <img src="../assets/logo.png" style="width: 100%; margin: 50px 0" alt="" />
+            <img
+              src="../assets/img1668491064379.png"
+              v-if="appConfigStore.theme === ThemeMode.LIGHT"
+              style="width: 100%; margin: 50px 0"
+              alt=""
+            />
+            <img
+              src="../assets/img1668491270212.png"
+              v-if="appConfigStore.theme === ThemeMode.DARK"
+              style="width: 100%; margin: 50px 0"
+              alt=""
+            />
           </n-gi>
           <n-gi>
             <div class="right-over-area">
@@ -55,9 +66,9 @@
                 </n-space>
               </template>
               <template #default>
-                <n-scrollbar style="max-height: 30vh">
+                <n-scrollbar style="max-height: 500px">
                   <div
-                    v-for="(item, index) in userConfigStore.historyRecord.reverse()"
+                    v-for="(item, index) in historicalRecords"
                     :key="index"
                     class="history-record"
                     @click="handelHistoryRecordClickOn(item)"
@@ -124,25 +135,28 @@
 </template>
 
 <script lang="ts" setup>
-  import { SettingsOutline, BugSharp, TrashBinOutline } from '@vicons/ionicons5'
+  import { SettingsOutline, Sunny as BugSharp, TrashBinOutline } from '@vicons/ionicons5'
   import { useAppConfigStore } from '@/store/modules/app-config'
   import { useUserConfigStore } from '@/store/modules/user-config'
   import { getPoetryOfDay } from '@/api/modules/youdao'
   import { ThemeMode } from '@/store/types'
   import Content from '@/components/layout/content.vue'
-  import { onMounted, ref } from 'vue'
-  import { useRouter } from 'vue-router'
+  import { computed, onMounted, ref } from 'vue'
   import { useMessage } from 'naive-ui'
 
   const appConfigStore = useAppConfigStore()
   const userConfigStore = useUserConfigStore()
   const message = useMessage()
+
+  const historicalRecords = computed(() => {
+    const records = userConfigStore.historyRecord
+    return records.reverse()
+  })
   const homeFooter = ref<boolean>(false)
   const poetryData = ref<any>({})
   const active = ref<boolean>(false)
   const userFrom = ref<any>({})
   const rule = ref<string>('')
-  const router = useRouter()
 
   function changSubject() {
     appConfigStore.theme =
