@@ -10,8 +10,8 @@ export const getTranslate = (data: any) => {
 
 export const getPoetryOfDay = () => {
   return request({
-    baseURL: 'https://v2.jinrishici.com',
-    url: '/one.json',
+    baseURL: 'https://v1.hitokoto.cn/?encode=json&lang=cn',
+    url: '/',
     method: 'get',
   })
 }

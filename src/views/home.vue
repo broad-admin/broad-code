@@ -93,7 +93,7 @@
             <div></div>
           </n-gi>
           <n-gi style="height: 50px; line-height: 50px; text-align: center" v-if="homeFooter">
-            <div> 🎈🎈{{ poetryData?.content }}🎈🎈</div>
+            <div> 🎈🎈{{ poetryData?.hitokoto }}🎈🎈</div>
           </n-gi>
           <n-gi>
             <div></div>
@@ -187,7 +187,7 @@
 
   function getPoetryOfDayData() {
     getPoetryOfDay().then((res: any) => {
-      poetryData.value = res.data
+      poetryData.value = res
       homeFooter.value = true
     })
   }

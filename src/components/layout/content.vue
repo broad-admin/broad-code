@@ -5,6 +5,7 @@
       @keyup.enter="handelSearch"
       placeholder="请输入翻译的文本"
       size="large"
+      ref="queryInputRef"
       autofocus
       style="height: 50px; line-height: 50px"
       round
@@ -72,7 +73,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, defineProps, watch } from 'vue'
+  import { ref, defineProps, watch, onMounted } from 'vue'
   import { getTranslate } from '@/api/modules/youdao'
   import { FlashOutline } from '@vicons/ionicons5'
   import { useUserConfigStore } from '@/store/modules/user-config'
@@ -85,6 +86,7 @@
     getSearch: any
   }>()
 
+  const queryInputRef = ref<any>(null)
   const message = useMessage()
   const userConfig = useUserConfigStore()
   const loadingBar = useLoadingBar()
@@ -223,10 +225,8 @@
     const excUsRule: [] = userConfig.excludeRule || []
     excUsRule.push(...userConfig.defaultExcludeRule)
     nameList.forEach((index: string) => {
-      console.log(1)
       const a = index.split(' ')
       const b = a.map((item) => {
-        console.log(2)
         let type = true
         excUsRule.forEach((rule) => {
           if (item === rule) {
@@ -239,7 +239,6 @@
       })
       let c = ''
       b.forEach((item) => {
-        console.log(3)
         if (item) {
           c = c + item + ' '
         }
@@ -254,6 +253,14 @@
     clipboard.on('success', (e) => {})
     message.success('复制成功')
   }
+
+  onMounted(() => {
+    document.onkeydown = function (e) {
+      if (e.key === 'Control') {
+        queryInputRef.value.focus()
+      }
+    }
+  })
 </script>
 
 <style scoped>
