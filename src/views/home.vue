@@ -88,12 +88,15 @@
         </n-grid>
       </n-layout-content>
       <n-layout-footer class="home-footer">
-        <n-grid x-gap="12" :cols="3">
+        <n-grid :x-gap="12" :y-gap="12" :cols="3" layout-shift-disabled>
           <n-gi>
             <div></div>
           </n-gi>
-          <n-gi style="height: 50px; line-height: 50px; text-align: center" v-if="homeFooter">
-            <div> 🎈🎈{{ poetryData?.hitokoto }}🎈🎈</div>
+          <n-gi style="height: 50px; line-height: 50px" v-if="homeFooter">
+            <n-space justify="space-between">
+              <span>🔍发现一枚 {{ userAddress.province }}{{ userAddress.city }} 的小伙伴</span>
+              <span>🎈🎈{{ poetryData?.hitokoto }}🎈🎈</span></n-space
+            >
           </n-gi>
           <n-gi>
             <div></div>
@@ -114,7 +117,14 @@
                       @keydown.enter="handleSetRule"
                     />
                   </n-form-item>
-                  <n-alert type="warning" style="margin-bottom: 10px"> 暂未开放以下功能</n-alert>
+                  <n-alert title="已排除关键词" type="info" :bordered="false">
+                    <n-space>
+                      <span v-for="(item, index) in userConfigStore.excludeRule" :key="index">
+                        {{ item }}
+                      </span>
+                    </n-space>
+                  </n-alert>
+                  <n-alert type="warning" style="margin: 10px 0"> 暂未开放以下功能</n-alert>
                   <n-form-item label="应用ID" label-width="100px">
                     <n-input v-model:value="userFrom.appKey" placeholder="输入个人申请的应用ID" />
                   </n-form-item>
@@ -138,7 +148,7 @@
   import { SettingsOutline, Sunny as BugSharp, TrashBinOutline } from '@vicons/ionicons5'
   import { useAppConfigStore } from '@/store/modules/app-config'
   import { useUserConfigStore } from '@/store/modules/user-config'
-  import { getPoetryOfDay } from '@/api/modules/youdao'
+  import { getIpCity, getPoetryOfDay } from '@/api/modules/youdao'
   import { ThemeMode } from '@/store/types'
   import Content from '@/components/layout/content.vue'
   import { computed, onMounted, ref } from 'vue'
@@ -147,6 +157,7 @@
   const appConfigStore = useAppConfigStore()
   const userConfigStore = useUserConfigStore()
   const message = useMessage()
+  const userAddress = ref<object>({})
 
   const historicalRecords = computed(() => {
     const records = userConfigStore.historyRecord
@@ -185,15 +196,18 @@
     message.success('清空成功')
   }
 
-  function getPoetryOfDayData() {
-    getPoetryOfDay().then((res: any) => {
-      poetryData.value = res
-      homeFooter.value = true
-    })
+  async function getPoetryOfDayData() {
+    poetryData.value = await getPoetryOfDay()
+    homeFooter.value = true
+  }
+
+  async function getUserAddress() {
+    userAddress.value = await getIpCity()
   }
 
   onMounted(() => {
     getPoetryOfDayData()
+    getUserAddress()
   })
 </script>
 

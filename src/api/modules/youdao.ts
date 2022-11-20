@@ -15,3 +15,11 @@ export const getPoetryOfDay = () => {
     method: 'get',
   })
 }
+
+export const getIpCity = () => {
+  return request({
+    baseURL: 'https://restapi.amap.com',
+    url: '/v3/ip?key=940a4357b2fff76d09ad090d74ccc111',
+    method: 'get',
+  })
+}
