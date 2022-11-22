@@ -7,7 +7,6 @@ export const useUserConfigStore = defineStore(
     const state = reactive<any>({
       historyRecord: [],
       excludeRule: [],
-      defaultExcludeRule: ['public', 'bool'],
     })
 
     function addHistoryRecord(query: string) {
@@ -26,11 +25,16 @@ export const useUserConfigStore = defineStore(
       state.historyRecord = []
     }
 
+    function clearExcludeRule() {
+      state.excludeRule = []
+    }
+
     return {
       ...toRefs(state),
       addHistoryRecord,
       addExcludeRule,
       clearHistoryRecord,
+      clearExcludeRule,
     }
   },
   {

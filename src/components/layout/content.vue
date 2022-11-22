@@ -223,7 +223,6 @@
   function filterExcUsRule(nameList: []) {
     const arr: any = []
     const excUsRule: [] = userConfig.excludeRule || []
-    excUsRule.push(...userConfig.defaultExcludeRule)
     nameList.forEach((index: string) => {
       const a = index.split(' ')
       const b = a.map((item) => {

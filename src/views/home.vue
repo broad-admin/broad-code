@@ -111,25 +111,40 @@
               <div>
                 <n-form :model="userFrom">
                   <n-form-item label="排除关键词" label-width="100px">
-                    <n-input
-                      v-model:value="userFrom.rule"
-                      placeholder="输入关键词，回车生效"
-                      @keydown.enter="handleSetRule"
-                    />
+                    <n-input v-model:value="userFrom.rule" placeholder="输入关键词" />
                   </n-form-item>
-                  <n-alert title="已排除关键词" type="info" :bordered="false">
+                  <n-alert
+                    title="已排除关键词"
+                    type="info"
+                    :bordered="false"
+                    style="margin-bottom: 10px"
+                  >
                     <n-space>
-                      <span v-for="(item, index) in userConfigStore.excludeRule" :key="index">
+                      <n-text
+                        strong
+                        v-for="(item, index) in userConfigStore.excludeRule"
+                        :key="index"
+                      >
                         {{ item }}
-                      </span>
+                      </n-text>
                     </n-space>
                   </n-alert>
+                  <n-space justify="end">
+                    <n-button type="primary" @click="handleSetRule">保存</n-button>
+                    <n-popconfirm @positive-click="handlePositiveClick">
+                      <template #trigger>
+                        <n-button>清空</n-button>
+                      </template>
+                      是否清空排除关键词？
+                    </n-popconfirm>
+                  </n-space>
+                  <n-divider />
                   <n-alert type="warning" style="margin: 10px 0"> 暂未开放以下功能</n-alert>
                   <n-form-item label="应用ID" label-width="100px">
-                    <n-input v-model:value="userFrom.appKey" placeholder="输入个人申请的应用ID" />
+                    <n-input v-model:value="userFrom.appKey" placeholder="输入申请的应用ID" />
                   </n-form-item>
                   <n-form-item label="应用密钥" label-width="100px">
-                    <n-input v-model:value="userFrom.rule" placeholder="输入个人申请的应用密钥" />
+                    <n-input v-model:value="userFrom.rule" placeholder="输入申请的应用密钥" />
                   </n-form-item>
                 </n-form>
               </div>
@@ -193,6 +208,11 @@
       return
     }
     userConfigStore.clearHistoryRecord()
+    message.success('清空成功')
+  }
+
+  function handlePositiveClick() {
+    userConfigStore.clearExcludeRule()
     message.success('清空成功')
   }
 
