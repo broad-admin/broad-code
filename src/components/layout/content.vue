@@ -15,57 +15,58 @@
       </template>
     </n-input>
     <n-card title="📖 大驼峰" embedded :bordered="false" class="card-man">
-      <n-tag
-        type="success"
-        :data-clipboard-text="toHump(item)"
-        v-for="(item, index) in searchData.translation"
-        :key="index"
-        @click="copy"
-      >
-        {{ toHump(item) }}
+      <n-tag type="success" v-for="(item, index) in searchData.translation" :key="index">
+        <div class="copy-view" @click="copy" :data-clipboard-text="toHump(item)">{{
+          toHump(item)
+        }}</div>
       </n-tag>
     </n-card>
     <n-card title="📖 小驼峰" embedded :bordered="false" class="card-man">
       <n-tag
         type="success"
         v-for="(item, index) in searchData.translation"
-        :data-clipboard-text="toSmallHump(item)"
         :key="index"
         @click="copy"
       >
-        {{ toSmallHump(item) }}
+        <div class="copy-view" @click="copy" :data-clipboard-text="toSmallHump(item)">{{
+          toSmallHump(item)
+        }}</div>
       </n-tag>
     </n-card>
     <n-card title="📖 大蛇行" embedded :bordered="false" class="card-man">
       <n-tag
         type="success"
         v-for="(item, index) in searchData.translation"
-        :data-clipboard-text="toBigSerpent(item)"
         :key="index"
         @click="copy"
       >
-        {{ toBigSerpent(item) }}
+        <div class="copy-view" @click="copy" :data-clipboard-text="toBigSerpent(item)">
+          {{ toBigSerpent(item) }}
+        </div>
       </n-tag>
     </n-card>
     <n-card title="📖 小蛇行" embedded :bordered="false" class="card-man">
       <n-tag
         type="success"
         v-for="(item, index) in searchData.translation"
-        :data-clipboard-text="toLowercase(item)"
         :key="index"
         @click="copy"
       >
-        {{ toLowercase(item) }}
+        <div class="copy-view" @click="copy" :data-clipboard-text="toLowercase(item)">{{
+          toHump(item)
+        }}</div>
       </n-tag>
     </n-card>
     <n-card title="📖 CSS命名" embedded :bordered="false" class="card-man">
       <n-tag
         type="success"
         v-for="(item, index) in searchData.translation"
-        :data-clipboard-text="cssSpecif(item)"
         :key="index"
         @click="copy"
       >
+        <div class="copy-view" @click="copy" :data-clipboard-text="cssSpecif(item)">{{
+          toHump(item)
+        }}</div>
         {{ cssSpecif(item) }}
       </n-tag>
     </n-card>
@@ -248,7 +249,7 @@
   }
 
   function copy() {
-    const clipboard = new Clipboard('.n-tag')
+    const clipboard = new Clipboard('.copy-view')
     clipboard.on('success', (e) => {})
     message.success('复制成功')
   }
