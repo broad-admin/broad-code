@@ -15,28 +15,58 @@
       </template>
     </n-input>
     <n-card title="📖 大驼峰" embedded :bordered="false" class="card-man">
-      <n-tag type="info" v-for="(item, index) in searchData.translation" :key="index" @click="copy">
-        <p :data-clipboard-text="toHump(item)">{{ toHump(item) }}</p>
+      <n-tag
+        type="success"
+        :data-clipboard-text="toHump(item)"
+        v-for="(item, index) in searchData.translation"
+        :key="index"
+        @click="copy"
+      >
+        {{ toHump(item) }}
       </n-tag>
     </n-card>
     <n-card title="📖 小驼峰" embedded :bordered="false" class="card-man">
-      <n-tag type="info" v-for="(item, index) in searchData.translation" :key="index" @click="copy">
-        <p :data-clipboard-text="toSmallHump(item)">{{ toSmallHump(item) }}</p>
+      <n-tag
+        type="success"
+        v-for="(item, index) in searchData.translation"
+        :data-clipboard-text="toSmallHump(item)"
+        :key="index"
+        @click="copy"
+      >
+        {{ toSmallHump(item) }}
       </n-tag>
     </n-card>
     <n-card title="📖 大蛇行" embedded :bordered="false" class="card-man">
-      <n-tag type="info" v-for="(item, index) in searchData.translation" :key="index" @click="copy">
-        <p :data-clipboard-text="toBigSerpent(item)">{{ toBigSerpent(item) }}</p>
+      <n-tag
+        type="success"
+        v-for="(item, index) in searchData.translation"
+        :data-clipboard-text="toBigSerpent(item)"
+        :key="index"
+        @click="copy"
+      >
+        {{ toBigSerpent(item) }}
       </n-tag>
     </n-card>
     <n-card title="📖 小蛇行" embedded :bordered="false" class="card-man">
-      <n-tag type="info" v-for="(item, index) in searchData.translation" :key="index" @click="copy">
-        <p :data-clipboard-text="toLowercase(item)">{{ toLowercase(item) }}</p>
+      <n-tag
+        type="success"
+        v-for="(item, index) in searchData.translation"
+        :data-clipboard-text="toLowercase(item)"
+        :key="index"
+        @click="copy"
+      >
+        {{ toLowercase(item) }}
       </n-tag>
     </n-card>
     <n-card title="📖 CSS命名" embedded :bordered="false" class="card-man">
-      <n-tag type="info" v-for="(item, index) in searchData.translation" :key="index" @click="copy">
-        <p :data-clipboard-text="cssSpecif(item)">{{ cssSpecif(item) }}</p>
+      <n-tag
+        type="success"
+        v-for="(item, index) in searchData.translation"
+        :data-clipboard-text="cssSpecif(item)"
+        :key="index"
+        @click="copy"
+      >
+        {{ cssSpecif(item) }}
       </n-tag>
     </n-card>
   </div>
@@ -163,28 +193,28 @@
 
   // 首字母小写
   function lowercaseFirstLetter(name: string) {
-    return name.replace(/^./, function (all) {
+    return name.replace(/^./, function (all, letter) {
       return all.toLowerCase()
     })
   }
 
   // 首字母大写
   function initCapita(name: string) {
-    return name.replace(/^./, function (all) {
+    return name.replace(/^./, function (all, letter) {
       return all.toUpperCase()
     })
   }
 
   // 全部大写
   function uppercase(name: string) {
-    return name.replace(/[a-z]/g, function (all) {
+    return name.replace(/[a-z]/g, function (all, letter) {
       return all.toUpperCase()
     })
   }
 
   // 全部小写
   function lowercase(name: string) {
-    return name.replace(/[A-Z]/g, function (all) {
+    return name.replace(/[A-Z]/g, function (all, letter) {
       return all.toLowerCase()
     })
   }
@@ -218,12 +248,7 @@
   }
 
   function copy() {
-    const clipboard = new Clipboard('p', {
-      text: () => {
-        // 过滤空格
-        return searchData.value.translation[0].trim()
-      },
-    })
+    const clipboard = new Clipboard('.n-tag')
     clipboard.on('success', (e) => {})
     message.success('复制成功')
   }
