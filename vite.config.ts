@@ -17,6 +17,7 @@ export default defineConfig({
   ],
   build: {
     outDir: 'docs',
+    assetsDir: 'broad-code/assets',
   },
   publicDir: 'broad-code',
   server: {
