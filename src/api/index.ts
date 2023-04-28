@@ -16,6 +16,7 @@ export const TEXT_PLAIN = 'text/plain; charset=utf-8'
 
 const service = Axios.create({
   timeout: 10 * 60 * 1000,
+  baseURL,
 })
 
 const { message } = createDiscreteApi(['message'])

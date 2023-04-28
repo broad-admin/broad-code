@@ -12,7 +12,7 @@
 
 ![BroadCodeHome](https://gitee.com/broad-code/broad-code/raw/master/public/pic.png)
 
-快速访问：http://139.159.194.35:8100
+快速访问：https://xinggaoya.github.io/broad-code
 
 > 使用小技巧:
 >
