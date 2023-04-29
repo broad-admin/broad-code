@@ -19,7 +19,7 @@ export default defineConfig({
     outDir: 'docs',
   },
   // 公共基础路径
-  base: '/broad-code',
+  base: '/broad-code/',
   server: {
     port: 3000,
     host: '0.0.0.0',
@@ -27,10 +27,10 @@ export default defineConfig({
       overlay: false,
     },
     proxy: {
-      '/broad-code/agent': {
+      '/broad-code': {
         target: 'https://openapi.youdao.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/broad-code\/agent/, ''),
+        rewrite: (path) => path.replace(/^\/broad-code/, ''),
       },
     },
   },

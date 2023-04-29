@@ -2,7 +2,7 @@ import request from '@/api/index'
 
 export const getTranslate = (data: any) => {
   return request({
-    url: '/broad-code/agent/api',
+    url: '/broad-code/api',
     method: 'post',
     data,
   })
