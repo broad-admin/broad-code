@@ -2,7 +2,7 @@ import request from '@/api/index'
 
 export const getTranslate = (data: any) => {
   return request({
-    url: 'https://openapi.youdao.com',
+    url: 'https://openapi.youdao.com/api',
     method: 'post',
     data,
   })
