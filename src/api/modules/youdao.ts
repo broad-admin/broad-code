@@ -5,7 +5,7 @@ export const getTranslate = (data: any) => {
     baseURL: 'https://openapi.youdao.com',
     url: '/api',
     method: 'get',
-    data,
+    params: data,
   })
 }
 
