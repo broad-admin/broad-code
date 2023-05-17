@@ -2,7 +2,8 @@ import request from '@/api/index'
 
 export const getTranslate = (data: any) => {
   return request({
-    url: '/agent/api',
+    baseURL: 'https://openapi.youdao.com',
+    url: '/api',
     method: 'post',
     data,
   })
