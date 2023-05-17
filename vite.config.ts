@@ -24,13 +24,6 @@ export default defineConfig({
     hmr: {
       overlay: false,
     },
-    proxy: {
-      '/agent': {
-        target: 'https://openapi.youdao.com',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/agent/, ''),
-      },
-    },
   },
   resolve: {
     alias: {
