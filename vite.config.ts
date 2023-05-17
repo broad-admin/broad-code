@@ -25,10 +25,10 @@ export default defineConfig({
       overlay: false,
     },
     proxy: {
-      '/api': {
+      '/agent': {
         target: 'https://openapi.youdao.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/agent/, ''),
       },
     },
   },
