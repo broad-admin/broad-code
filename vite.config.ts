@@ -18,8 +18,6 @@ export default defineConfig({
   build: {
     outDir: 'docs',
   },
-  // 公共基础路径
-  base: '/broad-code/',
   server: {
     port: 3000,
     host: '0.0.0.0',
