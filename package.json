@@ -1,6 +1,7 @@
 {
   "name": "broad-code",
   "version": "2.2.7",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "staging": "vite build  --mode staging",
