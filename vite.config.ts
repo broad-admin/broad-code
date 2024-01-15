@@ -24,6 +24,12 @@ export default defineConfig({
     hmr: {
       overlay: false,
     },
+    proxy: {
+      '/api': {
+        target: 'https://openapi.youdao.com',
+        changeOrigin: true,
+      },
+    },
   },
   resolve: {
     alias: {

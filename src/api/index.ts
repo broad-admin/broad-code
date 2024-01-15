@@ -24,20 +24,6 @@ service.interceptors.request.use(
   (config) => {
     !config.headers && (config.headers = {})
     config.headers[CONTENT_TYPE] = FORM_URLENCODED
-    // 添加token请求头
-    // if (!config.headers[REQUEST_HEADER]) {
-    //   config.headers[REQUEST_HEADER] = useUserStoreConvex().token
-    // }
-    // 如果get请求，参数为对象，转换为字符串
-    if (
-      config.method === 'get' ||
-      config.method === 'GET' ||
-      config.method === 'delete' ||
-      (config.method === 'DELETE' && config.data)
-    ) {
-      config.params = config.data
-      config.data = {}
-    }
     return config
   },
   (error) => {

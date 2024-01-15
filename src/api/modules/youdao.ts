@@ -1,6 +1,7 @@
 import request from '@/api/index'
 
 export const getTranslate = (data: any) => {
+  console.log(data)
   return request({
     url: '/api',
     method: 'get',
